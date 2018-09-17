@@ -11,8 +11,8 @@ function Enemy(){
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
-    this.y = 60;
+    this.x = 0; // 1st row=0; next row=1st row+101; so on
+    this.y = 60; // 1st line=60; next line=1st line+83; so on
 };
 
 // Update the enemy's position, required method for game
@@ -54,8 +54,8 @@ Player class:
 function Player(){
 
     this.sprite = 'images/char-cat-girl.png';
-    this.x = 400;
-    this.y = 400;
+    this.x = 0+101*4; // 1st row=0; next row=1st row+101; so on
+    this.y = 60+83*4; // 1st line=60; next line=1st line+83; so on
 }
 
 // This class requires an update(), render() and
