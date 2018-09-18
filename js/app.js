@@ -50,14 +50,53 @@ Player class:
 */
 
 // Now write your own player class
-// const Player = function() {
-function Player(){
+class Player {
+    constructor(sprite = 'char-cat-girl'){
+        this.sprite = `images/${sprite}.png`;
+        this.xMove = 101;
+        this.yMove = 83;
+        this.x0 = 0+this.xMove*2;
+        this.y0 = 60+this.yMove*4;
+        this.x = this.x0; // 1st row=0; next row=1st row+101; so on
+        this.y = this.y0; // 1st line=60; next line=1st line+83; so on
+    }
+    // a handleInput() method.
+    handleInput(key){
+        switch(key){
+            case 'left':
+                if(this.x===0){
+                    break;
+                }else{
+                    this.x -= this.xMove;
+                    break;
+                }
 
-    this.sprite = 'images/char-cat-girl.png';
-    this.x0 = 0+101*2;
-    this.y0 = 60+83*4;
-    this.x = this.x0; // 1st row=0; next row=1st row+101; so on
-    this.y = this.y0; // 1st line=60; next line=1st line+83; so on
+            case 'up':
+                if(this.y===60){
+                    break; //this should be winner -- remember to change it to winner condition
+                }else{
+                    this.y -= this.yMove;
+                    break;
+                }
+
+            case 'right':
+                if(this.x===this.xMove*4){
+                    break;
+                }else{
+                    this.x += this.xMove;
+                    break;
+                }
+
+            case 'down':
+                if(this.y===this.y0){
+                    break;
+                }else{
+                    this.y += this.yMove;
+                    break;
+                }
+        }
+    }
+
 }
 
 // This class requires an update(), render() and
@@ -70,42 +109,6 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// a handleInput() method.
-Player.prototype.handleInput = function(key){
-    switch(key){
-        case 'left':
-            if(this.x===0){
-                break;
-            }else{
-                this.x -= 101;
-                break;
-            }
-
-        case 'up':
-            if(this.y===60){
-                break; //this should be winner -- remember to change it to winner condition
-            }else{
-                this.y -= 83;
-                break;
-            }
-
-        case 'right':
-            if(this.x===404){
-                break;
-            }else{
-                this.x += 101;
-                break;
-            }
-
-        case 'down':
-            if(this.y===this.y0){
-                break;
-            }else{
-                this.y += 83;
-                break;
-            }
-    }
-};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -113,7 +116,7 @@ let allEnemies = [new Enemy()];
 
 // Place the player object in a variable called player
 let player = new Player();
-
+// let player = new Player('char-pink-girl'); // Customize player sprite
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
