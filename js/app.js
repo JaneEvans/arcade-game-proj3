@@ -64,12 +64,29 @@ Player.prototype.update = function(dt){
 };  
 
 Player.prototype.render = function(){
+    
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // a handleInput() method.
 Player.prototype.handleInput = function(key){
 
+    switch(key){
+        case 'left':
+            
+            this.x -= 101;
+            break;
+        case 'up':
+           
+            this.y -= 83;
+            break;
+        case 'right':
+            this.x += 101;
+            break;
+        case 'down':
+            this.y += 83;
+            break;
+    }
 };
 
 // Now instantiate your objects.
