@@ -54,8 +54,10 @@ Player class:
 function Player(){
 
     this.sprite = 'images/char-cat-girl.png';
-    this.x = 0+101*4; // 1st row=0; next row=1st row+101; so on
-    this.y = 60+83*4; // 1st line=60; next line=1st line+83; so on
+    this.x0 = 0+101*2;
+    this.y0 = 60+83*4;
+    this.x = this.x0; // 1st row=0; next row=1st row+101; so on
+    this.y = this.y0; // 1st line=60; next line=1st line+83; so on
 }
 
 // This class requires an update(), render() and
@@ -70,22 +72,38 @@ Player.prototype.render = function(){
 
 // a handleInput() method.
 Player.prototype.handleInput = function(key){
-
     switch(key){
         case 'left':
-            
-            this.x -= 101;
-            break;
+            if(this.x===0){
+                break;
+            }else{
+                this.x -= 101;
+                break;
+            }
+
         case 'up':
-           
-            this.y -= 83;
-            break;
+            if(this.y===60){
+                break; //this should be winner -- remember to change it to winner condition
+            }else{
+                this.y -= 83;
+                break;
+            }
+
         case 'right':
-            this.x += 101;
-            break;
+            if(this.x===404){
+                break;
+            }else{
+                this.x += 101;
+                break;
+            }
+
         case 'down':
-            this.y += 83;
-            break;
+            if(this.y===this.y0){
+                break;
+            }else{
+                this.y += 83;
+                break;
+            }
     }
 };
 
