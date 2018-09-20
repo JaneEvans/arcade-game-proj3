@@ -4,37 +4,42 @@
 ENEMY ---------------------------------------------------
 */
 // const Enemy = function() {
-function Enemy(){
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x0 = 0; // 1st row=0; next row=1st row+101; so on
-    this.y0 = 60; // 1st line=60; next line=1st line+83; so on
-    this.xMove = 101;
-    this.x = this.x0;
-    this.y = this.y0;
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    if(this.x < 101 + 4*this.xMove){
-        this.x += 100*dt;
-    }else{
+class Enemy{
+    constructor(sprite = 'enemy-bug'){
+        this.sprite = `images/${sprite}.png`;
+        this.x0 = 0; // 1st row=0; next row=1st row+101; so on
+        this.y0 = 60; // 1st line=60; next line=1st line+83; so on
+        this.xMove = 101;
         this.x = this.x0;
+        this.y = this.y0;
     }
-};
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+    // Update the enemy's position
+    // Parameter: dt, a time delta between ticks
+    update(dt){ 
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        if(this.x < 101 + 4*this.xMove){
+            this.x += 100*dt;
+        }else{
+            this.x = this.x0;
+        }       
+    }
+
+    // Draw the enemy on the screen, required method for game
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
+
+}
+
+
+
+
+
+
+
 
 /*
 PLAYER -----------------------------------------------------------
