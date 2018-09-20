@@ -112,7 +112,12 @@ class Player {
         }
     }
     // This class requires an update()
-    update(dt){}
+    update(){
+        for(let enemy of allEnemies){
+            // Check if collide
+
+        }
+    }
 
     // This class requires an render()
     render(){
@@ -143,12 +148,18 @@ function getRandomInt(min, max) {
 let allEnemies = [];
 // Generate 5 enemies with various speed and starting positions
 for(let n = 0; n < 5; n++){
-    s = 100 * getRandomNum(1, 2.5);
+    s = 100 * getRandomNum(1, 3);
     x = -101 * getRandomNum(0, 2);
     y = 60 + 83 * getRandomInt(0,3);
 
-    enemy = new Enemy('enemy-bug', s, x, y);
-    allEnemies.push(enemy);
+    if(n===4){
+        enemy = new Enemy('Rock', 400, -101, y);
+        allEnemies.push(enemy);
+    }else{
+        enemy = new Enemy('enemy-bug', s, x, y);
+        allEnemies.push(enemy);
+    }
+
 }
 
 
