@@ -11,8 +11,11 @@ function Enemy(){
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0; // 1st row=0; next row=1st row+101; so on
-    this.y = 60; // 1st line=60; next line=1st line+83; so on
+    this.x0 = 0; // 1st row=0; next row=1st row+101; so on
+    this.y0 = 60; // 1st line=60; next line=1st line+83; so on
+    this.xMove = 101;
+    this.x = this.x0;
+    this.y = this.y0;
 };
 
 // Update the enemy's position, required method for game
@@ -21,6 +24,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    if(this.x < 101 + 4*this.xMove){
+        this.x += 100*dt;
+    }else{
+        this.x = this.x0;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -96,23 +104,31 @@ class Player {
                 }
         }
     }
+    // This class requires an update()
+    update(dt){}
+
+    // This class requires an render()
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
 
 }
 
 // This class requires an update(), render() and
-Player.prototype.update = function(dt){
+// Player.prototype.update = function(dt){
+// };  
 
-};  
-
-Player.prototype.render = function(){
-    
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+// Player.prototype.render = function(){
+//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+// };
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-let allEnemies = [new Enemy()];
+let enemy = new Enemy();
+let allEnemies = [];
+allEnemies.push(enemy);
 
 // Place the player object in a variable called player
 let player = new Player();
