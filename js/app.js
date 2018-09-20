@@ -5,13 +5,15 @@ ENEMY ---------------------------------------------------
 */
 // const Enemy = function() {
 class Enemy{
-    constructor(sprite = 'enemy-bug'){
+    constructor(sprite = 'enemy-bug', speed=150, x0=-101, y0=60){
         this.sprite = `images/${sprite}.png`;
-        this.x0 = 0; // 1st row=0; next row=1st row+101; so on
-        this.y0 = 60; // 1st line=60; next line=1st line+83; so on
+        this.x0 = x0; // 1st row=0; next row=1st row+101; so on
+        this.y0 = y0; // 1st line=60; next line=1st line+83; so on
         this.xMove = 101;
+        this.yMove = 83;
         this.x = this.x0;
         this.y = this.y0;
+        this.speed = speed;
     }
 
     // Update the enemy's position
@@ -21,7 +23,7 @@ class Enemy{
         // which will ensure the game runs at the same speed for
         // all computers.
         if(this.x < 101 + 4*this.xMove){
-            this.x += 100*dt;
+            this.x += this.speed*dt;
         }else{
             this.x = this.x0;
         }       
@@ -120,20 +122,36 @@ class Player {
 
 }
 
-// This class requires an update(), render() and
-// Player.prototype.update = function(dt){
-// };  
-
-// Player.prototype.render = function(){
-//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
 
 
-// Now instantiate your objects.
+
+
+
+
+// A function to get random number between two values
+function getRandomNum(min, max) {
+    return Math.random() * (max - min) + min;
+}
+// A function to get random Int between two values
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
+
 // Place all enemy objects in an array called allEnemies
-let enemy = new Enemy();
 let allEnemies = [];
-allEnemies.push(enemy);
+// Generate 5 enemies with various speed and starting positions
+for(let n = 0; n < 5; n++){
+    s = 100 * getRandomNum(1, 2.5);
+    x = -101 * getRandomNum(0, 2);
+    y = 60 + 83 * getRandomInt(0,3);
+
+    enemy = new Enemy('enemy-bug', s, x, y);
+    allEnemies.push(enemy);
+}
+
+
 
 // Place the player object in a variable called player
 let player = new Player();
