@@ -77,9 +77,10 @@ class Player {
     }
     // a handleInput() method.
     handleInput(key){
+
         switch(key){
             case 'left':
-                if(this.x===0){
+                if((this.x===0) || ((this.y===Rock.y) && (this.x===Rock.x+this.xMove)) ){
                     break;
                 }else{
                     this.x -= this.xMove;
@@ -87,7 +88,7 @@ class Player {
                 }
 
             case 'up':
-                if(this.y===60){
+                if((this.y < 60) || ((this.y===Rock.y+this.yMove) && (this.x===Rock.x))){
                     break; //this should be winner -- remember to change it to winner condition
                 }else{
                     this.y -= this.yMove;
@@ -95,7 +96,7 @@ class Player {
                 }
 
             case 'right':
-                if(this.x===this.xMove*4){
+                if((this.x===this.xMove*4) || ((this.y===Rock.y) && (this.x===Rock.x-this.xMove))){
                     break;
                 }else{
                     this.x += this.xMove;
@@ -103,7 +104,7 @@ class Player {
                 }
 
             case 'down':
-                if(this.y===this.y0){
+                if((this.y===this.y0) || ((this.y===Rock.y-this.yMove) && (this.x===Rock.x))){
                     break;
                 }else{
                     this.y += this.yMove;
@@ -113,9 +114,20 @@ class Player {
     }
     // This class requires an update()
     update(){
-        for(let enemy of allEnemies){
-            // Check if collide
 
+        // Check if collide
+        for(let enemy of allEnemies){
+            if((this.y === enemy.y) && (this.x - 101/2 <= enemy.x) && (enemy.x <= this.x + 101/2) ){
+                if(enemy.sprite==='images/enemy-bug.png'){
+                    console.log('Collision!');
+                }
+            }
+
+        }
+
+        // Check if win
+        if(this.y < 60){
+            console.log("You win!");
         }
     }
 
@@ -147,14 +159,15 @@ function getRandomInt(min, max) {
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [];
 // Generate 5 enemies with various speed and starting positions
-for(let n = 0; n < 5; n++){
-    s = 100 * getRandomNum(1, 3);
+for(let n = 0; n < 6; n++){
+    s = 101 * getRandomNum(1, 5);
     x = -101 * getRandomNum(0, 2);
+    xRock = 101 * getRandomInt(0,4);
     y = 60 + 83 * getRandomInt(0,3);
 
-    if(n===4){
-        enemy = new Enemy('Rock', 400, -101, y);
-        allEnemies.push(enemy);
+    if(n===0){
+        Rock = new Enemy('Rock', 0, xRock, y);
+        allEnemies.push(Rock);
     }else{
         enemy = new Enemy('enemy-bug', s, x, y);
         allEnemies.push(enemy);
