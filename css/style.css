@@ -2,6 +2,14 @@ body {
     text-align: center;
 }
 
+.container {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 /*
 defines the layer which will cover the site once the floating window is showed.
 */
@@ -25,11 +33,21 @@ Defining the floating window
     text-align: center;
     float: middle;
     background: transparent;
-    margin: 200px auto ;
+    margin: 250px auto ;
     width: 450px;
     z-index: 103; 
     position:relative;
     /* padding:30px 30px 30px 30px; */
+}
+
+p{
+    margin: 0;
+}
+
+#gameIntro{
+    font-size: 20px;
+    font-family: 'Gloria Hallelujah', cursive;
+    margin-top: 1em;
 }
 
 #gameOver{

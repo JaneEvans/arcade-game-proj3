@@ -25,13 +25,15 @@ let Engine = (function(global) {
     let lastTime, 
         rqID;
 
+    canvas.width = 505;
+    canvas.height = 606;
+    doc.body.appendChild(canvas);
+
     $('.close-button').click(function(){
         init();
     });
 
-    canvas.width = 505;
-    canvas.height = 606;
-    doc.body.appendChild(canvas);
+    $('#gameIntro').text(` ❗ Avoid bugs ❗ Detour around rock ✔️ Arrive the river`);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -64,7 +66,10 @@ let Engine = (function(global) {
             rqID = win.requestAnimationFrame(main);
         }else{
             win.cancelAnimationFrame(rqID);
-            $('#darkOverlay').show('slow');
+
+            $('#darkOverlay #gameOver').text(`🎊 You arrived the river!`);
+            $('.close-button').text('Play Again');
+            $('#darkOverlay').show();
         }
         
     }
