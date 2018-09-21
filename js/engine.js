@@ -22,7 +22,12 @@ let Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d');
-    let lastTime;
+    let lastTime, 
+        rqID;
+
+    $('.close-button').click(function(){
+        init();
+    });
 
     canvas.width = 505;
     canvas.height = 606;
@@ -55,7 +60,13 @@ let Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        if(player.win === false){
+            rqID = win.requestAnimationFrame(main);
+        }else{
+            win.cancelAnimationFrame(rqID);
+            $('#darkOverlay').show('slow');
+        }
+        
     }
 
     /* This function does some initial setup that should only occur once,
@@ -63,6 +74,8 @@ let Engine = (function(global) {
      * game loop.
      */
     function init() {
+        $('#darkOverlay').hide('');
+        App.randomEnemies();
         reset();
         lastTime = Date.now();
         main();
@@ -161,7 +174,9 @@ let Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        player.x = player.x0;
+        player.y = player.y0;
+        player.win = false;
     }
 
     /* Go ahead and load all of the images we know we're going to need to

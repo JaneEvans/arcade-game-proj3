@@ -72,8 +72,9 @@ class Player {
         this.yMove = 83;
         this.x0 = 0+this.xMove*2;
         this.y0 = 60+this.yMove*4;
-        this.x = this.x0; // 1st row=0; next row=1st row+101; so on
-        this.y = this.y0; // 1st line=60; next line=1st line+83; so on
+        this.win = false;
+        // this.x = this.x0; // 1st row=0; next row=1st row+101; so on
+        // this.y = this.y0; // 1st line=60; next line=1st line+83; so on
     }
     // a handleInput() method.
     handleInput(key){
@@ -88,9 +89,13 @@ class Player {
                 }
 
             case 'up':
-                if((this.y < 60) || ((this.y===Rock.y+this.yMove) && (this.x===Rock.x))){
-                    break; //this should be winner -- remember to change it to winner condition
-                }else{
+                if((this.y === 60)){
+                    this.y -= 1;
+                    break;
+                }else if((this.y===Rock.y+this.yMove) && (this.x===Rock.x)){
+                    break;
+                }
+                else{
                     this.y -= this.yMove;
                     break;
                 }
@@ -119,9 +124,7 @@ class Player {
         for(let enemy of allEnemies){
             if((this.y === enemy.y) && (this.x - 101/2 <= enemy.x) && (enemy.x <= this.x + 101/2) ){
                 if(enemy.sprite==='images/enemy-bug.png'){
-                    console.log('Collision!');
-                    this.x = this.x0;
-                    this.y = this.y0;
+                    this.reset();
                 }
             }
 
@@ -129,15 +132,19 @@ class Player {
 
         // Check if win
         if(this.y < 60){
-            console.log("You win!");
-            this.x = this.x0;
-            this.y = this.y0;
+            this.win = true;
         }
     }
 
     // This class requires an render()
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    // A reset function
+    reset(){
+        this.x = this.x0;
+        this.y = this.y0;
     }
 
 
@@ -161,25 +168,27 @@ function getRandomInt(min, max) {
   }
 
 // Place all enemy objects in an array called allEnemies
-let allEnemies = [];
+ 
+let allEnemies;
 // Generate 5 enemies with various speed and starting positions
-for(let n = 0; n < 6; n++){
-    s = 101 * getRandomNum(1, 5);
-    x = -101 * getRandomNum(0, 2);
-    xRock = 101 * getRandomInt(0,4);
-    y = 60 + 83 * getRandomInt(0,3);
-
-    if(n===0){
-        Rock = new Enemy('Rock', 0, xRock, y);
-        allEnemies.push(Rock);
-    }else{
-        enemy = new Enemy('enemy-bug', s, x, y);
-        allEnemies.push(enemy);
+function randomEnemies(){
+    allEnemies = [];
+    for(let n = 0; n < 6; n++){
+        s = 101 * getRandomNum(1, 5);
+        x = -101 * getRandomNum(0, 2);
+        xRock = 101 * getRandomInt(0,4);
+        y = 60 + 83 * getRandomInt(0,3);
+    
+        if(n===0){
+            Rock = new Enemy('Rock', 0, xRock, y);
+            allEnemies.push(Rock);
+        }else{
+            enemy = new Enemy('enemy-bug', s, x, y);
+            allEnemies.push(enemy);
+        }
+    
     }
-
 }
-
-
 
 // Place the player object in a variable called player
 let player = new Player();
@@ -197,3 +206,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+/* This object defines the publicly accessible functions available to
+* developers by creating a global Resources object.
+*/    
+window.App = {
+    randomEnemies: randomEnemies
+};
