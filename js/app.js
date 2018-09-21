@@ -3,18 +3,20 @@ Critter -----------------------------------------------
 A supperclass for critters in this game
 */
 class Critter {
-    constructor(sprite, x0, y0, xMove=101, yMove=83){
+    constructor(sprite,x0,y0){
         this.sprite = `images/${sprite}.png`;
         this.x0=x0;
         this.y0=y0;
+        this.xMove = 101;
+        this.yMove = 83;
         this.x=this.x0;
         this.y=this.y0;
-        this.xMove=xMove;
-        this.yMove=yMove;
     }
 
     // Draw the critter on the screen
-    
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
 }
 
 
@@ -26,15 +28,11 @@ Inheritance of Critter
 */
 
 class Enemy extends Critter {
-    constructor(sprite = 'enemy-bug', x0=-101, y0=60, xMove, yMove,speed=150){
-        super(sprite, x0, y0, xMove, yMove)
+    constructor(sprite = 'enemy-bug', x0=-101, y0=60, speed=150){
+        super(sprite, x0, y0);
         this.sprite = `images/${sprite}.png`;
         this.x0 = x0; // 1st row=0; next row=1st row+101; so on
         this.y0 = y0; // 1st line=60; next line=1st line+83; so on
-        // this.xMove = 101;
-        // this.yMove = 83;
-        this.x = this.x0;
-        this.y = this.y0;
         this.speed = speed;
     }
 
@@ -60,23 +58,21 @@ class Enemy extends Critter {
 
     }
 
-    // Draw the enemy on the screen, required method for game
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    };
-
-    // A reset function 
+    // A reset function to reset player position
     reset(){
         player.x = player.x0;
         player.y = player.y0;
     }
 
+    // Draw the enemy on the screen, required method for game
+    render() {
+        super.render();
+    };
+    
+
+
+
 }
-
-
-
-
-
 
 
 
@@ -102,16 +98,13 @@ Player class:
 */
 
 // Now write your own player class
-class Player {
+class Player extends Critter {
     constructor(sprite = 'char-cat-girl', x0=0, y0=60){
+        super(sprite, x0, y0);
         this.sprite = `images/${sprite}.png`;
-        this.xMove = 101;
-        this.yMove = 83;
         this.x0 = x0+this.xMove*2; // 1st row=0; next row=1st row+101
         this.y0 = y0+this.yMove*4; // 1st line=60; next line=1st line+83
         this.win = false;
-        this.x = this.x0; 
-        this.y = this.y0; 
     }
     
     // a handleInput() method.
@@ -166,18 +159,13 @@ class Player {
 
     // This class requires an render()
     render(){
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        super.render();
     }
 
 
 
 
 }
-
-
-
-
-
 
 
 // A function to get random number between two values
@@ -189,7 +177,7 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-  }
+}
 
 // Place all enemy objects in an array called allEnemies
  
@@ -204,7 +192,7 @@ function randomEnemies(){
         y = 60 + 83 * getRandomInt(0,3);
     
         if(n===0){
-            Rock = new Enemy('Rock', 0, xRock, y);
+            Rock = new Enemy('Rock', xRock, y, 0);
             allEnemies.push(Rock);
         }else{
             enemy = new Enemy('enemy-bug', x, y, s);
