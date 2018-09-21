@@ -1,16 +1,38 @@
+/*
+Critter -----------------------------------------------
+A supperclass for critters in this game
+*/
+class Critter {
+    constructor(sprite, x0, y0, xMove=101, yMove=83){
+        this.sprite = `images/${sprite}.png`;
+        this.x0=x0;
+        this.y0=y0;
+        this.x=this.x0;
+        this.y=this.y0;
+        this.xMove=xMove;
+        this.yMove=yMove;
+    }
+
+    // Draw the critter on the screen
+    
+}
+
+
 // Enemies our player must avoid
 
 /*
 ENEMY ---------------------------------------------------
+Inheritance of Critter
 */
-// const Enemy = function() {
-class Enemy{
-    constructor(sprite = 'enemy-bug', speed=150, x0=-101, y0=60){
+
+class Enemy extends Critter {
+    constructor(sprite = 'enemy-bug', x0=-101, y0=60, xMove, yMove,speed=150){
+        super(sprite, x0, y0, xMove, yMove)
         this.sprite = `images/${sprite}.png`;
         this.x0 = x0; // 1st row=0; next row=1st row+101; so on
         this.y0 = y0; // 1st line=60; next line=1st line+83; so on
-        this.xMove = 101;
-        this.yMove = 83;
+        // this.xMove = 101;
+        // this.yMove = 83;
         this.x = this.x0;
         this.y = this.y0;
         this.speed = speed;
@@ -81,19 +103,20 @@ Player class:
 
 // Now write your own player class
 class Player {
-    constructor(sprite = 'char-cat-girl'){
+    constructor(sprite = 'char-cat-girl', x0=0, y0=60){
         this.sprite = `images/${sprite}.png`;
         this.xMove = 101;
         this.yMove = 83;
-        this.x0 = 0+this.xMove*2;
-        this.y0 = 60+this.yMove*4;
+        this.x0 = x0+this.xMove*2; // 1st row=0; next row=1st row+101
+        this.y0 = y0+this.yMove*4; // 1st line=60; next line=1st line+83
         this.win = false;
-        // this.x = this.x0; // 1st row=0; next row=1st row+101; so on
-        // this.y = this.y0; // 1st line=60; next line=1st line+83; so on
+        this.x = this.x0; 
+        this.y = this.y0; 
     }
+    
     // a handleInput() method.
     handleInput(key){
-
+        
         switch(key){
             case 'left':
                 if((this.x===0) || ((this.y===Rock.y) && (this.x===Rock.x+this.xMove)) ){
@@ -184,7 +207,7 @@ function randomEnemies(){
             Rock = new Enemy('Rock', 0, xRock, y);
             allEnemies.push(Rock);
         }else{
-            enemy = new Enemy('enemy-bug', s, x, y);
+            enemy = new Enemy('enemy-bug', x, y, s);
             allEnemies.push(enemy);
         }
     
