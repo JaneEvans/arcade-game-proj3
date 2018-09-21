@@ -120,6 +120,8 @@ class Player {
             if((this.y === enemy.y) && (this.x - 101/2 <= enemy.x) && (enemy.x <= this.x + 101/2) ){
                 if(enemy.sprite==='images/enemy-bug.png'){
                     console.log('Collision!');
+                    this.x = this.x0;
+                    this.y = this.y0;
                 }
             }
 
@@ -128,6 +130,8 @@ class Player {
         // Check if win
         if(this.y < 60){
             console.log("You win!");
+            this.x = this.x0;
+            this.y = this.y0;
         }
     }
 
