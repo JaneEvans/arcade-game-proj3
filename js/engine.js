@@ -33,7 +33,7 @@ let Engine = (function(global) {
         init();
     });
 
-    $('#gameIntro').text(` ❗ Avoid bugs ❗ Detour around rock ✔️ Arrive the river`);
+    $('#gameIntro').text(` ❗ Avoid bugs ❗ Detour around rock ✔️ Arrive at the river`);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -67,7 +67,7 @@ let Engine = (function(global) {
         }else{
             win.cancelAnimationFrame(rqID);
 
-            $('#darkOverlay #gameOver').text(`🎊 You arrived the river!`);
+            $('#darkOverlay #gameOver').text(`🎊 You arrived at the river!`);
             $('.close-button').text('Play Again');
             $('#darkOverlay').show();
         }

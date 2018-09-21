@@ -173,7 +173,7 @@ let allEnemies;
 // Generate 5 enemies with various speed and starting positions
 function randomEnemies(){
     allEnemies = [];
-    for(let n = 0; n < 6; n++){
+    for(let n = 0; n < 5; n++){
         s = 101 * getRandomNum(1, 5);
         x = -101 * getRandomNum(0, 2);
         xRock = 101 * getRandomInt(0,4);
