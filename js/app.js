@@ -26,13 +26,28 @@ class Enemy{
             this.x += this.speed*dt;
         }else{
             this.x = this.x0;
-        }       
+        }
+        
+        // Check if collide
+        // Move to Enemy method to avoid looping over all enemies but just on the current reference
+        if((this.y === player.y) && (player.x - 101/2 <= this.x) && (this.x <= player.x + 101/2) ){
+            if(this.sprite==='images/enemy-bug.png'){
+                this.reset();
+            }
+        }
+
     }
 
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
+
+    // A reset function 
+    reset(){
+        player.x = player.x0;
+        player.y = player.y0;
+    }
 
 }
 
@@ -120,16 +135,6 @@ class Player {
     // This class requires an update()
     update(){
 
-        // Check if collide
-        for(let enemy of allEnemies){
-            if((this.y === enemy.y) && (this.x - 101/2 <= enemy.x) && (enemy.x <= this.x + 101/2) ){
-                if(enemy.sprite==='images/enemy-bug.png'){
-                    this.reset();
-                }
-            }
-
-        }
-
         // Check if win
         if(this.y < 60){
             this.win = true;
@@ -141,11 +146,7 @@ class Player {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    // A reset function
-    reset(){
-        this.x = this.x0;
-        this.y = this.y0;
-    }
+
 
 
 }
