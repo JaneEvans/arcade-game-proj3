@@ -1,6 +1,8 @@
 # Arcade Game Project
 A classic arcade game -- I wanna swim!
 
+* To run this game locally, please clone/download this repository into a local path, then open the index.html file in browser.
+
 ## Instructions
 1. Every game will have 5 randomly generated bugs crawling across the stone road at different speeds; in addition to crawling bugs, a rock will lie randomly on the stone road;
 2. Player uses keyboard "up", "down", "left", "right" to control avatar's movement;
